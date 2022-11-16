@@ -4,14 +4,16 @@ import { Link } from 'react-router-dom'
 const Header: React.FC = () => {
  return (
   <header className="sticky top-0 z-50 flex justify-between items-center px-8 py-3 w-full border-b border-gray-700">
-   <Link to={'/'}>
-    <p className="text-3xl">The ticket clone</p>
+   <Link to={'/'} className="text-3xl hover:text-white">
+    The ticket clone
    </Link>
    <div className="flex space-x-8">
-    <Link to={'/add-event'}>
-     <p className="text-sm">Create event</p>
+    <Link to={'/add-event'} className="text-sm">
+     Create event
     </Link>
-    <p className="text-sm">Sign in</p>
+    <Link to={'/login'} className="text-sm">
+     Log in
+    </Link>
    </div>
   </header>
  )
