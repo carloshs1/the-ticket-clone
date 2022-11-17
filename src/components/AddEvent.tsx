@@ -41,13 +41,15 @@ const AddEvent: React.FC = () => {
  return (
   <div className="w-full flex flex-col md:flex-row justify-end items-center md:items-start max-w-5xl mx-auto">
    <div
-    className={`relative border border-gray-300 rounded w-full max-w-xs m-5 ${
-     flyer ? 'h-auto' : 'aspect-[300/375]'
+    className={`relative border rounded w-full max-w-xs m-5 ${
+     flyer
+      ? 'h-auto ring-2 ring-green-600 border-transparent'
+      : 'aspect-[300/375] border-gray-300'
     } flex flex-col justify-center space-y-3`}
    >
     {flyer ? (
      <>
-      <img src={flyer as string} alt="" />
+      <img src={flyer as string} alt="Flyer" className="rounded" />
       <div
        onClick={() => flyerPickerRef.current?.click()}
        className="absolute bottom-2 left-2 mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-gray-700 cursor-pointer hover:bg-gradient-to-r hover:from-orange-300 hover:to-red-500"
@@ -86,7 +88,11 @@ const AddEvent: React.FC = () => {
      value={name}
      onChange={(e) => setName(e.target.value)}
      placeholder="Name of the event"
-     className="w-full rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent px-5 py-3 disabled:opacity-50 disabled:cursor-not-allowed"
+     className={`w-full rounded border border-gray-300 focus:outline-none focus:ring-2 ${
+      name
+       ? 'focus:ring-green-600 ring-2 ring-green-600 outline-none border-transparent'
+       : 'focus:ring-blue-600'
+     } focus:border-transparent px-5 py-3 disabled:opacity-50 disabled:cursor-not-allowed`}
     />
     <input
      required
@@ -95,7 +101,13 @@ const AddEvent: React.FC = () => {
      value={date}
      onChange={(e) => setDate(e.target.value)}
      placeholder="Select a date for the event"
-     className="w-full rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent px-5 py-3 disabled:opacity-50 disabled:cursor-not-allowed"
+     className={`w-full rounded border border-gray-300 focus:outline-none focus:ring-2 ${
+      date
+       ? isInThePast(new Date(date))
+         ? 'focus:ring-red-600 ring-2 ring-red-600 outline-none border-transparent'
+         : 'focus:ring-green-600 ring-2 ring-green-600 outline-none border-transparent'
+       : 'focus:ring-blue-600'
+     } focus:border-transparent px-5 py-3 disabled:opacity-50 disabled:cursor-not-allowed`}
     />
     <input
      required
@@ -108,12 +120,16 @@ const AddEvent: React.FC = () => {
      value={description}
      onChange={(e) => setDescription(e.target.value)}
      placeholder="Description"
-     className="rounded min-h-[50px] max-h-40 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent px-5 py-3 disabled:opacity-50 disabled:cursor-not-allowed"
+     className={`rounded min-h-[50px] max-h-40 border border-gray-300 focus:outline-none focus:ring-2 ${
+      description
+       ? 'focus:ring-green-600 ring-2 ring-green-600 outline-none border-transparent'
+       : 'focus:ring-blue-600'
+     } focus:border-transparent px-5 py-3 disabled:opacity-50 disabled:cursor-not-allowed`}
     />
     {isInThePast(new Date(date)) && (
      <p className="text-red-200">Past dates are not allowed</p>
     )}
-    {name && date && flyer && !isInThePast(new Date(date)) && (
+    {name && date && flyer && !isInThePast(new Date(date)) ? (
      <button
       type="submit"
       disabled={!name || !date || !flyer || isInThePast(new Date(date))}
@@ -121,6 +137,8 @@ const AddEvent: React.FC = () => {
      >
       Add Event
      </button>
+    ) : (
+     <p>Name, Date and Flyer are required</p>
     )}
    </form>
   </div>
