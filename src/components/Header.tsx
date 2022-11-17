@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 const Header: React.FC = () => {
  return (
-  <header className="sticky top-0 z-50 flex justify-between items-center px-8 py-3 w-full border-b border-gray-700">
+  <header className="sticky top-0 z-50 flex justify-between items-center px-8 py-3 w-full bg-[rgba(28,28,30,.9)]">
    <Link to={'/'} className="text-3xl hover:text-white">
     The ticket clone
    </Link>
