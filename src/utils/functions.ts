@@ -1,38 +1,42 @@
 const daysOfTheWeek: string[] = [
- 'SUNDAY',
- 'MONDAY',
- 'TUESDAY',
- 'WEDNESDAY',
- 'THURSDAY',
- 'FRIDAY',
- 'SATURDAY',
+ 'Sunday',
+ 'Monday',
+ 'Tuesday',
+ 'Wednesday',
+ 'Thursday',
+ 'Friday',
+ 'Saturday',
 ]
 
 const monthsOfTheYear: string[] = [
- 'JANUARY',
- 'FEBRUARY',
- 'MARCH',
- 'APRIL',
- 'MAY',
- 'JUNE',
- 'JULY',
- 'AUGUST',
- 'SEPTEMBER',
- 'OCTOBER',
- 'NOVEMBER',
- 'DECEMBER',
+ 'January',
+ 'February',
+ 'March',
+ 'April',
+ 'May',
+ 'June',
+ 'July',
+ 'August',
+ 'September',
+ 'October',
+ 'November',
+ 'December',
 ]
 
 export const isInThePast: (date: Date) => boolean = (date) => {
  const today = new Date()
- today.setHours(0, 0, 0, 0)
  return date < today
 }
 
-export const createDate: (date: string) => string = (date) => {
+export const createDate: (date: string, toUpperCase: boolean) => string = (
+ date,
+ toUpperCase
+) => {
  const currentDate = new Date(date)
  return `${currentDate.getDate()} ${
-  monthsOfTheYear[currentDate.getMonth()]
+  toUpperCase
+   ? monthsOfTheYear[currentDate.getMonth()].toUpperCase()
+   : monthsOfTheYear[currentDate.getMonth()]
  } ${currentDate.getFullYear()}`
 }
 

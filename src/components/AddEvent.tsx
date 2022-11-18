@@ -6,7 +6,7 @@ import { v4 as uuid } from 'uuid'
 
 const AddEvent: React.FC = () => {
  const flyerPickerRef = useRef<HTMLInputElement | null>(null)
- const [events, setEvents] = useState(
+ const [events, setEvents] = useState<EventType[]>(
   localStorage.getItem('events')
    ? JSON.parse(localStorage.getItem('events')!)
    : []
@@ -26,7 +26,7 @@ const AddEvent: React.FC = () => {
    flyer: flyer as string,
    id: uuid(),
   }
-  const updatedEvents = [...events, newEvent]
+  const updatedEvents: EventType[] = [...events, newEvent]
   setName('')
   setDescription('')
   setFlyer(null)
@@ -51,7 +51,7 @@ const AddEvent: React.FC = () => {
    <div
     className={`relative border rounded w-full max-w-xs m-5 ${
      flyer
-      ? 'h-auto ring-2 ring-green-600 border-transparent'
+      ? 'h-auto ring-2 ring-green-600 border-green-600'
       : 'aspect-[300/375] border-gray-300'
     } flex flex-col justify-center space-y-3`}
    >
@@ -98,13 +98,13 @@ const AddEvent: React.FC = () => {
      placeholder="Name of the event"
      className={`w-full rounded border border-gray-300 focus:outline-none focus:ring-2 ${
       name
-       ? 'focus:ring-green-600 ring-2 ring-green-600 outline-none border-transparent'
+       ? 'focus:ring-green-600 ring-2 ring-green-600 outline-none border-green-600'
        : 'focus:ring-blue-600'
      } focus:border-transparent px-5 py-3 disabled:opacity-50 disabled:cursor-not-allowed`}
     />
     <input
      required
-     type="date"
+     type="datetime-local"
      min={'2022/12/01'}
      value={date}
      onChange={(e) => setDate(e.target.value)}
@@ -112,8 +112,8 @@ const AddEvent: React.FC = () => {
      className={`w-full rounded border border-gray-300 focus:outline-none focus:ring-2 ${
       date
        ? isInThePast(new Date(date))
-         ? 'focus:ring-red-600 ring-2 ring-red-600 outline-none border-transparent'
-         : 'focus:ring-green-600 ring-2 ring-green-600 outline-none border-transparent'
+         ? 'focus:ring-red-600 ring-2 ring-red-600 outline-none border-red-600'
+         : 'focus:ring-green-600 ring-2 ring-green-600 outline-none border-green-600'
        : 'focus:ring-blue-600'
      } focus:border-transparent px-5 py-3 disabled:opacity-50 disabled:cursor-not-allowed`}
     />
@@ -130,7 +130,7 @@ const AddEvent: React.FC = () => {
      placeholder="Description"
      className={`rounded min-h-[50px] max-h-40 border border-gray-300 focus:outline-none focus:ring-2 ${
       description
-       ? 'focus:ring-green-600 ring-2 ring-green-600 outline-none border-transparent'
+       ? 'focus:ring-green-600 ring-2 ring-green-600 outline-none border-green-600'
        : 'focus:ring-blue-600'
      } focus:border-transparent px-5 py-3 disabled:opacity-50 disabled:cursor-not-allowed`}
     />

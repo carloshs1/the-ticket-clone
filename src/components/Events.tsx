@@ -14,7 +14,7 @@ const Events: React.FC = () => {
     {events?.map((event: EventType) => (
      <div
       key={event.id}
-      className={`w-full max-w-xs col-span-1 aspect-[310/448] bg-gradient-to-tr from-orange-300 to-red-500`}
+      className={`w-full max-w-xs col-span-1 aspect-[310/448] bg-gradient-to-tr from-orange-300 to-red-500 shadow-md shadow-gray-900`}
      >
       <Link to={`/event/${event.id}`}>
        <img
@@ -33,9 +33,11 @@ const Events: React.FC = () => {
        </div>
        <div className="w-full aspect-[304/40]">
         <p className="text-left font-extrabold text-md text-[#ffa46b]">
-         {createDate(event.date)}
+         {createDate(event.date, true)}
         </p>
-        <p className="text-left text-xs">{createDayOfTheWeek(event.date)}</p>
+        <p className="text-left text-xs">
+         {createDayOfTheWeek(event.date).toUpperCase()}
+        </p>
        </div>
       </div>
      </div>
