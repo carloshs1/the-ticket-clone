@@ -1,6 +1,8 @@
 import React, { FormEvent, useRef, useState } from 'react'
 import { isInThePast } from '../utils/functions'
 import { PhotoIcon, PencilIcon, TrashIcon } from '@heroicons/react/24/solid'
+import { EventType } from '../utils/types'
+import { v4 as uuid } from 'uuid'
 
 const AddEvent: React.FC = () => {
  const flyerPickerRef = useRef<HTMLInputElement | null>(null)
@@ -17,7 +19,13 @@ const AddEvent: React.FC = () => {
  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
   e.preventDefault()
   if (!name || !date || isInThePast(new Date(date))) return
-  const newEvent = { name, date, description, flyer }
+  const newEvent: EventType = {
+   name,
+   date,
+   description,
+   flyer: flyer as string,
+   id: uuid(),
+  }
   const updatedEvents = [...events, newEvent]
   setName('')
   setDescription('')

@@ -50,3 +50,8 @@ button:focus,
 button:focus-visible {
  outline: 4px auto -webkit-focus-ring-color;
 }
+.title-clamp-2 {
+ display: -webkit-box;
+ -webkit-box-orient: vertical;
+ -webkit-line-clamp: 2;
+}
