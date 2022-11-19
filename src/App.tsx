@@ -5,6 +5,7 @@ import AddOrEditEvent from './components/AddOrEditEvent'
 import Events from './components/Events'
 import Login from './components/Login'
 import EventDetails from './components/EventDetails'
+import Footer from './components/Footer'
 
 function App() {
  return (
@@ -20,6 +21,7 @@ function App() {
     </Route>
     <Route path="*" element={<Navigate to={'/'} />} />
    </Routes>
+   <Footer />
   </div>
  )
 }

@@ -20,15 +20,15 @@ const EventDetails: React.FC = () => {
   navigate('/')
  }
  return (
-  <div className="px-3 py-5 space-y-3">
+  <div className="px-3 py-5 mx-auto space-y-3 md:w-[748px]">
    <h1 className="text-2xl text-white text-left">{event.name}</h1>
    <p className="text-left text-sm">{`${createDayOfTheWeek(
     event.date
    )}, ${createDate(event.date, false)} ,${createTime(event.date)}`}</p>
-   <div className="space-y-5">
-    <div className="space-y-5">
+   <div className="flex flex-col space-y-5 md:flex-row md:space-x-5 md:space-y-0">
+    <div className="flex flex-col gap-5 md:max-w-[228px] md:flex-col-reverse md:space-y-0">
      <div className="border-white border-2">
-      <img src={event.flyer} alt="Flyer" />
+      <img src={event.flyer} alt="Flyer" className="w-full" />
      </div>
      <div className="bg-gray-50 pt-2 pb-5 px-5 space-y-2">
       <div className="flex space-x-1">
@@ -57,21 +57,23 @@ const EventDetails: React.FC = () => {
       </div>
      </div>
     </div>
-    <div className="bg-white">
-     <p className="text-gray-500 text-left text-sm p-5">{event.description}</p>
-    </div>
-    <div className="flex justify-between">
-     <Link to={`/event/${id}/edit`} className="text-sm">
-      <button className="text-sm border border-gray-300 py-[8px] hover:py-[9px] px-[12px] hover:px-[13px] hover:border-none rounded-sm hover:bg-gradient-to-r hover:from-orange-300 hover:to-red-500">
-       Edit your event
+    <div className="md:max-w-[476px] space-y-5">
+     <div className="bg-white md:h-min">
+      <p className="text-gray-500 text-left text-sm p-5">{event.description}</p>
+     </div>
+     <div className="flex justify-between md:justify-end md:space-x-3">
+      <Link to={`/event/${id}/edit`} className="text-sm">
+       <button className="text-sm border border-gray-300 py-[8px] hover:py-[9px] px-[12px] hover:px-[13px] hover:border-none rounded-sm hover:bg-gradient-to-r hover:from-orange-300 hover:to-red-500">
+        Edit your event
+       </button>
+      </Link>
+      <button
+       className="text-sm border border-gray-300 py-[8px] hover:py-[9px] px-[12px] hover:px-[13px] hover:border-none rounded-sm hover:bg-gradient-to-r hover:from-orange-300 hover:to-red-500"
+       onClick={handleDelete}
+      >
+       Delete your event
       </button>
-     </Link>
-     <button
-      className="text-sm border border-gray-300 py-[8px] hover:py-[9px] px-[12px] hover:px-[13px] hover:border-none rounded-sm hover:bg-gradient-to-r hover:from-orange-300 hover:to-red-500"
-      onClick={handleDelete}
-     >
-      Delete your event
-     </button>
+     </div>
     </div>
    </div>
   </div>
