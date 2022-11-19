@@ -3,18 +3,27 @@ import { isInThePast } from '../utils/functions'
 import { PhotoIcon, PencilIcon, TrashIcon } from '@heroicons/react/24/solid'
 import { EventType } from '../utils/types'
 import { v4 as uuid } from 'uuid'
+import { useNavigate, useParams } from 'react-router-dom'
 
-const AddEvent: React.FC = () => {
+const AddOrEditEvent: React.FC = () => {
+ const navigate = useNavigate()
+ const { id } = useParams()
  const flyerPickerRef = useRef<HTMLInputElement | null>(null)
- const [events, setEvents] = useState<EventType[]>(
-  localStorage.getItem('events')
-   ? JSON.parse(localStorage.getItem('events')!)
-   : []
+ const events: EventType[] = localStorage.getItem('events')
+  ? JSON.parse(localStorage.getItem('events')!)
+  : []
+ const event: EventType | null =
+  events && id
+   ? events.filter((currentEvent: EventType) => currentEvent.id === id)[0]
+   : null
+ const [name, setName] = useState<string>(event ? event.name! : '')
+ const [description, setDescription] = useState<string>(
+  event ? event.description! : ''
  )
- const [name, setName] = useState<string>('')
- const [description, setDescription] = useState<string>('')
- const [flyer, setFlyer] = useState<string | ArrayBuffer | null>(null)
- const [date, setDate] = useState<string>('')
+ const [flyer, setFlyer] = useState<string | ArrayBuffer | null>(
+  event ? event.flyer! : null
+ )
+ const [date, setDate] = useState<string>(event ? event.date! : '')
 
  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
   e.preventDefault()
@@ -24,16 +33,20 @@ const AddEvent: React.FC = () => {
    date,
    description,
    flyer: flyer as string,
-   id: uuid(),
+   id: event ? event.id : uuid(),
   }
-  const updatedEvents: EventType[] = [...events, newEvent]
+  const updatedEvents: EventType[] = event
+   ? events.map((currentEvent: EventType) =>
+      currentEvent.id === event.id ? newEvent : currentEvent
+     )
+   : [...events, newEvent]
   setName('')
   setDescription('')
   setFlyer(null)
   flyerPickerRef.current!.value = ''
   setDate('')
-  setEvents(updatedEvents)
   localStorage.setItem('events', JSON.stringify(updatedEvents))
+  navigate(`/event/${newEvent.id}`)
  }
 
  const addFlyerToEvent = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -118,7 +131,7 @@ const AddEvent: React.FC = () => {
      } focus:border-transparent px-5 py-3 disabled:opacity-50 disabled:cursor-not-allowed`}
     />
     <input
-     required
+     //  required
      ref={flyerPickerRef}
      type="file"
      hidden
@@ -143,7 +156,7 @@ const AddEvent: React.FC = () => {
       disabled={!name || !date || !flyer || isInThePast(new Date(date))}
       className="w-fit ml-auto border border-gray-300 py-[8px] hover:py-[9px] px-[12px] hover:px-[13px] hover:border-none rounded-sm hover:bg-gradient-to-r hover:from-orange-300 hover:to-red-500"
      >
-      Add Event
+      {event ? 'Update Event' : 'Add Event'}
      </button>
     ) : (
      <p>Name, Date and Flyer are required</p>
@@ -153,4 +166,4 @@ const AddEvent: React.FC = () => {
  )
 }
 
-export default AddEvent
+export default AddOrEditEvent

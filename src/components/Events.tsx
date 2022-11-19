@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { createDate, createDayOfTheWeek } from '../utils/functions'
+import { createDate, createDayOfTheWeek, createTime } from '../utils/functions'
 import { EventType } from '../utils/types'
 
 const Events: React.FC = () => {
@@ -36,7 +36,9 @@ const Events: React.FC = () => {
          {createDate(event.date, true)}
         </p>
         <p className="text-left text-xs">
-         {createDayOfTheWeek(event.date).toUpperCase()}
+         {`${createDayOfTheWeek(event.date).toUpperCase()} / ${createTime(
+          event.date
+         )}`}
         </p>
        </div>
       </div>

@@ -1,6 +1,6 @@
 import React from 'react'
-import { useParams } from 'react-router-dom'
-import { createDate, createDayOfTheWeek } from '../utils/functions'
+import { Link, useParams } from 'react-router-dom'
+import { createDate, createDayOfTheWeek, createTime } from '../utils/functions'
 import { EventType } from '../utils/types'
 import { TicketIcon } from '@heroicons/react/24/solid'
 
@@ -16,13 +16,13 @@ const EventDetails: React.FC = () => {
    <h1 className="text-2xl text-white text-left">{event.name}</h1>
    <p className="text-left text-sm">{`${createDayOfTheWeek(
     event.date
-   )}, ${createDate(event.date, false)}`}</p>
+   )}, ${createDate(event.date, false)} ,${createTime(event.date)}`}</p>
    <div className="space-y-5">
     <div className="space-y-5">
      <div className="border-white border-2">
       <img src={event.flyer} alt="Flyer" />
      </div>
-     <div className="bg-gray-50 pt-2 pb-6 px-5 space-y-2">
+     <div className="bg-gray-50 pt-2 pb-5 px-5 space-y-2">
       <div className="flex space-x-1">
        <TicketIcon className="h-6 w-6 text-gray-600" />
        <p className="text-gray-600">
@@ -51,6 +51,16 @@ const EventDetails: React.FC = () => {
     </div>
     <div className="bg-white">
      <p className="text-gray-500 text-left text-sm p-5">{event.description}</p>
+    </div>
+    <div className="flex justify-between">
+     <Link to={`/event/${id}/edit`} className="text-sm">
+      <button className="text-sm border border-gray-300 py-[8px] hover:py-[9px] px-[12px] hover:px-[13px] hover:border-none rounded-sm hover:bg-gradient-to-r hover:from-orange-300 hover:to-red-500">
+       Edit your event
+      </button>
+     </Link>
+     <button className="text-sm border border-gray-300 py-[8px] hover:py-[9px] px-[12px] hover:px-[13px] hover:border-none rounded-sm hover:bg-gradient-to-r hover:from-orange-300 hover:to-red-500">
+      Delete your event
+     </button>
     </div>
    </div>
   </div>
