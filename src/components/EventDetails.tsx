@@ -1,16 +1,24 @@
 import React from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { createDate, createDayOfTheWeek, createTime } from '../utils/functions'
 import { EventType } from '../utils/types'
 import { TicketIcon } from '@heroicons/react/24/solid'
 
 const EventDetails: React.FC = () => {
+ const navigate = useNavigate()
  const { id } = useParams()
- const event: EventType = localStorage.getItem('events')
-  ? JSON.parse(localStorage.getItem('events')!).filter(
-     (event: EventType) => event.id === id
-    )[0]
-  : {}
+ const events: EventType[] = localStorage.getItem('events')
+  ? JSON.parse(localStorage.getItem('events')!)
+  : []
+ const event: EventType =
+  events.filter((event: EventType) => event.id === id)[0] || {}
+ const handleDelete = () => {
+  const newEvents = events.filter(
+   (currentEvent: EventType) => currentEvent.id !== event.id
+  )
+  localStorage.setItem('events', JSON.stringify(newEvents))
+  navigate('/')
+ }
  return (
   <div className="px-3 py-5 space-y-3">
    <h1 className="text-2xl text-white text-left">{event.name}</h1>
@@ -58,7 +66,10 @@ const EventDetails: React.FC = () => {
        Edit your event
       </button>
      </Link>
-     <button className="text-sm border border-gray-300 py-[8px] hover:py-[9px] px-[12px] hover:px-[13px] hover:border-none rounded-sm hover:bg-gradient-to-r hover:from-orange-300 hover:to-red-500">
+     <button
+      className="text-sm border border-gray-300 py-[8px] hover:py-[9px] px-[12px] hover:px-[13px] hover:border-none rounded-sm hover:bg-gradient-to-r hover:from-orange-300 hover:to-red-500"
+      onClick={handleDelete}
+     >
       Delete your event
      </button>
     </div>
