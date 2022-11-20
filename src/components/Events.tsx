@@ -10,12 +10,15 @@ const Events: React.FC = () => {
  return (
   <div className="w-full flex flex-col items-center max-w-2xl lg:max-w-5xl xl:max-w-7xl mx-auto">
    <h1>UPCOMING EVENTS</h1>
-   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 place-items-center gap-2 items-center w-full md:p-5">
+   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 place-items-center gap-4 md:gap-2 items-center w-full md:p-5">
     {events?.map((event: EventType) => (
      <div
       key={event.id}
-      className={`w-full max-w-xs col-span-1 aspect-[310/448] bg-gradient-to-tr from-orange-300 to-red-500 shadow-md shadow-gray-900`}
+      className={`relative w-full max-w-xs col-span-1 aspect-[310/448] shadow-md shadow-gray-900`}
      >
+      <div className="w-full h-full absolute top-0 left-0 overflow-hidden -z-10 blur-3xl opacity-70">
+       <img src={event.flyer} alt="Background" className=" object-cover" />
+      </div>
       <Link to={`/event/${event.id}`}>
        <img
         src={event.flyer}
